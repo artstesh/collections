@@ -13,7 +13,7 @@ export class Queue<T> {
   }
 
   putMany(items: T[]): this {
-    items.forEach(i => this.put(i));
+    items.forEach((i) => this.put(i));
     return this;
   }
 
@@ -28,7 +28,7 @@ export class Queue<T> {
     return this.tail - this.head;
   }
 
-  each(action: (e:T) => void) {
+  each(action: (e: T) => void) {
     while (this.size) action(this.take()!);
   }
 }

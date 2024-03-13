@@ -1,5 +1,5 @@
 export class Dictionary<T> {
-  public collection: Record<string,T> = {}
+  public collection: Record<string, T> = {};
   private _keys = new Set<string>();
 
   public get keys(): string[] {
@@ -14,7 +14,7 @@ export class Dictionary<T> {
     return Dictionary.create(dic.collection, action);
   }
 
-  public static create<T>(dic: Record<string,T>, action?: (e: T, k: string) => T): Dictionary<T> {
+  public static create<T>(dic: Record<string, T>, action?: (e: T, k: string) => T): Dictionary<T> {
     const keyList = Object.keys(dic);
     const result = new Dictionary<T>();
     for (const key of keyList) {
@@ -26,8 +26,8 @@ export class Dictionary<T> {
 
   public find(predicate: (value: T) => boolean): T | null {
     let result: T | null = null;
-    this.forEach(e => {
-      if (result === null && predicate(e)) result = e
+    this.forEach((e) => {
+      if (result === null && predicate(e)) result = e;
     });
     return result;
   }
