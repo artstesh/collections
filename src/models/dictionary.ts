@@ -17,8 +17,7 @@ export class Dictionary<T> {
   public static create<T>(dic: Record<string,T>, action?: (e: T, k: string) => T): Dictionary<T> {
     const keyList = Object.keys(dic);
     const result = new Dictionary<T>();
-    for (let i = 0; i < keyList.length; i++) {
-      const key = keyList[i];
+    for (const key of keyList) {
       result._keys.add(key);
       result.collection[key] = action ? action(dic[key], key) : dic[key];
     }
