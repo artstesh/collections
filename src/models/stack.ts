@@ -19,7 +19,7 @@ export class Stack<T> {
   }
 
   get size(): number {
-    return this.head+1;
+    return this.head + 1;
   }
 
   each(action: (e: T) => void) {
