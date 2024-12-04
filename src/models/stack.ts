@@ -1,11 +1,9 @@
-export class Queue<T> {
+export class Stack<T> {
   private storage: Record<number, T> = {};
-  private head: number = 0;
-  private tail: number = 0;
+  private head: number = -1;
 
   put(item: T): this {
-    this.storage[this.tail] = item;
-    this.tail++;
+    this.storage[++this.head] = item;
     return this;
   }
 
@@ -16,12 +14,12 @@ export class Queue<T> {
 
   take(): T | undefined {
     const item = this.storage[this.head];
-    if (item) delete this.storage[this.head++];
+    if (item) delete this.storage[this.head--];
     return item;
   }
 
   get size(): number {
-    return this.tail - this.head;
+    return this.head+1;
   }
 
   each(action: (e: T) => void) {
