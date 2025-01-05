@@ -104,4 +104,33 @@ describe('Dictionary', () => {
       should().false(dictionary.has(Forger.create<string>()!));
     });
   })
+
+  describe('addOrUpdate', () => {
+    let dict: Dictionary<number[]>;
+
+    beforeEach(() => {
+      dict = new Dictionary<number[]>();
+    })
+
+    it('success', () => {
+      const key = Forger.create<string>()!;
+      const value = Forger.create<number>()!;
+      const initial = Forger.create<number[]>()!;
+      const expected = initial.length + 1;
+      dict.put(key, initial);
+      //
+      dict.addOrUpdate(key, v => v?.push(value) && v || [value]);
+      //
+      should().array(dict.take(key)).length(expected);
+    });
+
+    it('not found - success', () => {
+      const key = Forger.create<string>()!;
+      const value = Forger.create<number>()!;
+      //
+      dict.addOrUpdate(key, v => v?.push(value) && v || [value]);
+      //
+      should().array(dict.take(key)).length(1);
+    });
+  })
 })
