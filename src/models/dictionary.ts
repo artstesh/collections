@@ -32,7 +32,7 @@ export class Dictionary<T> {
    */
   public static fromList<T>(list: T[], id: (e: T) => string): Dictionary<T> {
     const result = new Dictionary<T>();
-    list.forEach(e => result.put(id(e), e));
+    list.forEach((e) => result.put(id(e), e));
     return result;
   }
 
