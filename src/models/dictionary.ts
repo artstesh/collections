@@ -9,24 +9,6 @@ export class Dictionary<T> {
   private readonly _keys = new Set<string>();
 
   /**
-   * Retrieves all the keys as an array of strings from the internal data structure.
-   *
-   * @return {string[]} An array containing the keys.
-   */
-  public get keys(): string[] {
-    return Array.from(this._keys);
-  }
-
-  /**
-   * Retrieves the number of key-value pairs currently stored.
-   *
-   * @return {number} The current size of the collection.
-   */
-  public get size(): number {
-    return this._keys.size;
-  }
-
-  /**
    * Creates a shallow copy of the given dictionary, optionally applying
    * a transformation function to each element during the cloning process.
    *
@@ -39,6 +21,19 @@ export class Dictionary<T> {
    */
   public static clone<T>(dic: Dictionary<T>, action?: (e: T, k: string) => T): Dictionary<T> {
     return Dictionary.create(dic.collection, action);
+  }
+
+  /**
+   * Creates a Dictionary instance from the given array of elements.
+   *
+   * @param {T[]} list - An array of elements to be converted into a Dictionary.
+   * @param {(e: T) => string} id - A function that produces a unique identifier for each element in the array.
+   * @return {Dictionary<T>} A Dictionary where the keys are unique identifiers derived from the elements of the array, and the values are the corresponding elements.
+   */
+  public static fromList<T>(list: T[], id: (e: T) => string): Dictionary<T> {
+    const result = new Dictionary<T>();
+    list.forEach(e => result.put(id(e), e));
+    return result;
   }
 
   /**
@@ -56,6 +51,24 @@ export class Dictionary<T> {
       result.put(key, action ? action(value, key) : value);
     });
     return result;
+  }
+
+  /**
+   * Retrieves all the keys as an array of strings from the internal data structure.
+   *
+   * @return {string[]} An array containing the keys.
+   */
+  public get keys(): string[] {
+    return Array.from(this._keys);
+  }
+
+  /**
+   * Retrieves the number of key-value pairs currently stored.
+   *
+   * @return {number} The current size of the collection.
+   */
+  public get size(): number {
+    return this._keys.size;
   }
 
   /**
@@ -78,7 +91,7 @@ export class Dictionary<T> {
    * @param {string} key - The key to check for existence in the collection.
    * @returns {boolean} True if the key exists, false otherwise.
    */
-  public has = (key: string) => this._keys.has(key);
+  public has = (key: string): boolean => this._keys.has(key);
 
   /**
    * Retrieves the value associated with the specified key from the collection if it exists.
